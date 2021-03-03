@@ -32,6 +32,7 @@ export function Account () {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [friendCode3ds, setFriendCode3ds] = useState(user && user.friend_code_3ds);
   const [friendCodeSwitch, setFriendCodeSwitch] = useState(user && user.friend_code_switch);
+  const [language, setLanguage] = useState(user && user.language);
   const [success, setSuccess] = useState(null);
 
   useEffect(() => {
@@ -61,7 +62,8 @@ export function Account () {
         password,
         password_confirm: passwordConfirm,
         friend_code_3ds: friendCode3ds,
-        friend_code_switch: friendCodeSwitch
+        friend_code_switch: friendCodeSwitch,
+        language
       }
     };
 
@@ -86,6 +88,7 @@ export function Account () {
   const handlePasswordConfirmChange = (e) => setPasswordConfirm(e.target.value);
   const handleFriendCode3dsChange = (e) => setFriendCode3ds(friendCode3dsFormatter(e.target.value));
   const handleFriendCodeSwitchChange = (e) => setFriendCodeSwitch(friendCodeSwitchFormatter(e.target.value));
+  const handleLanguageChange = (e) => setLanguage(e.target.value);
 
   return (
     <div className="account-container">
@@ -162,8 +165,15 @@ export function Account () {
           </div>
           <div className="form-group">
             <label htmlFor="language">Pokémon Name Language</label>
-            <select className="form-control">
-              <option>English</option>
+            <select
+              className="form-control"
+              id="language"
+              name="language"
+              onChange={handleLanguageChange}
+              value={language}
+            >
+              <option value="en">English</option>
+              <option value="de">German</option>
             </select>
             <FontAwesomeIcon icon={faChevronDown} />
           </div>
