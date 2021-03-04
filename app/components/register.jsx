@@ -1,22 +1,22 @@
-import slug                                                                 from 'slug';
-import { FontAwesomeIcon }                                                  from '@fortawesome/react-fontawesome';
-import { Link }                                                             from 'react-router-dom';
+import slug from 'slug';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import { faAsterisk, faChevronDown, faLongArrowAltRight, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector }                                         from 'react-redux';
-import { useEffect, useState }                                              from 'react';
-import { useHistory }                                                       from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 
-import { Alert }                                             from './alert';
-import { Footer }                                            from './footer';
-import { Nav }                                               from './nav';
-import { ReactGA }                                           from '../utils/analytics';
-import { Reload }                                            from './reload';
-import { createUser }                                        from '../actions/user';
+import { Alert } from './alert';
+import { Footer } from './footer';
+import { Nav } from './nav';
+import { ReactGA } from '../utils/analytics';
+import { Reload } from './reload';
+import { createUser } from '../actions/user';
 import { friendCode3dsFormatter, friendCodeSwitchFormatter } from '../utils/formatting';
-import { listGames }                                         from '../actions/game';
-import { setNotification }                                   from '../actions/utils';
+import { listGames } from '../actions/game';
+import { setNotification } from '../actions/utils';
 
-export function Register () {
+export function Register() {
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -35,6 +35,7 @@ export function Register () {
   const [game, setGame] = useState(games[0] && games[0].id);
   const [regional, setRegional] = useState(games[0] ? !games[0].game_family.national_support : false);
   const [shiny, setShiny] = useState(false);
+  const [language, setLanguage] = useState('en');
 
   useEffect(() => {
     document.title = 'Register | Pokédex Tracker';
@@ -68,7 +69,8 @@ export function Register () {
       title,
       shiny,
       game,
-      regional
+      regional,
+      language
     };
 
     setError(null);
@@ -90,6 +92,7 @@ export function Register () {
   const handleFriendCode3dsChange = (e) => setFriendCode3ds(friendCode3dsFormatter(e.target.value));
   const handleFriendCodeSwitchChange = (e) => setFriendCodeSwitch(friendCodeSwitchFormatter(e.target.value));
   const handleTitleChange = (e) => setTitle(e.target.value);
+  const handleLanguageChange = (e) => setLanguage(e.target.value);
 
   const handleGameChange = (e) => {
     const newGame = e.target.value;
@@ -192,6 +195,20 @@ export function Register () {
                   type="text"
                   value={friendCodeSwitch}
                 />
+              </div>
+              <div className="form-group">
+                <label htmlFor="language">Pokémon Name Language</label>
+                <select
+                  className="form-control"
+                  id="language"
+                  name="language"
+                  onChange={handleLanguageChange}
+                  value={language}
+                >
+                  <option value="en">English</option>
+                  <option value="de">German</option>
+                </select>
+                <FontAwesomeIcon icon={faChevronDown} />
               </div>
             </div>
 
