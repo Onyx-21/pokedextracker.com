@@ -185,7 +185,7 @@ export function Account() {
           <p>
             <a className="link" href="/account/delete">
               Delete account
-          </a>
+            </a>
           </p>
         </form>
       </div>

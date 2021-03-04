@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faLongArrowAltLeft, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
@@ -89,6 +89,11 @@ export function AccountDelete() {
             <span className={isLoading ? 'hidden' : ''}>Delete my account {!isLoading && <FontAwesomeIcon icon={faLongArrowAltRight} />}</span>
             {isLoading ? <span className="spinner"><FontAwesomeIcon icon={faCircleNotch} spin /></span> : null}
           </button>
+          <p>
+            <a className="link" href="/account">
+              No, I don't want to delete my account
+            </a>
+          </p>
         </form>
       </div>
       <Footer />
