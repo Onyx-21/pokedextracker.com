@@ -182,9 +182,11 @@ export function Account() {
             <span className={isLoading ? 'hidden' : ''}>Save {!isLoading && <FontAwesomeIcon icon={faLongArrowAltRight} />}</span>
             {isLoading ? <span className="spinner"><FontAwesomeIcon icon={faCircleNotch} spin /></span> : null}
           </button>
-          <a className="link" href="/account/delete">
-            Delete account
+          <p>
+            <a className="link" href="/account/delete">
+              Delete account
           </a>
+          </p>
         </form>
       </div>
       <Footer />
