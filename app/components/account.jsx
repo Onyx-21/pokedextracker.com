@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 import { Alert } from './alert';
 import { Footer } from './footer';
 import { Nav } from './nav';
+import { Link } from 'react-router-dom';
 import { ReactGA } from '../utils/analytics';
 import { Reload } from './reload';
 import { checkVersion } from '../actions/utils';
@@ -183,9 +184,9 @@ export function Account() {
             {isLoading ? <span className="spinner"><FontAwesomeIcon icon={faCircleNotch} spin /></span> : null}
           </button>
           <p>
-            <a className="link" href="/account/delete">
+            <Link className="link" to="/account/delete">
               Delete account
-            </a>
+            </Link>
           </p>
         </form>
       </div>
