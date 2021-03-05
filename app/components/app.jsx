@@ -1,24 +1,25 @@
-import { Route, Router, Switch }    from 'react-router-dom';
-import { createBrowserHistory }     from 'history';
+import { Route, Router, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect }                from 'react';
+import { useEffect } from 'react';
 
-import { Account }        from './account';
-import { Home }           from './home';
-import { Login }          from './login';
-import { NotFound }       from './not-found';
-import { Profile }        from './profile';
-import { Register }       from './register';
-import { Tracker }        from './tracker';
-import { logPageView }    from '../utils/analytics';
-import { retrieveUser }   from '../actions/user';
+import { Account } from './account';
+import { AccountDelete } from './account-delete';
+import { Home } from './home';
+import { Login } from './login';
+import { NotFound } from './not-found';
+import { Profile } from './profile';
+import { Register } from './register';
+import { Tracker } from './tracker';
+import { logPageView } from '../utils/analytics';
+import { retrieveUser } from '../actions/user';
 import { setSessionUser } from '../actions/session';
 
 const history = createBrowserHistory();
 history.listen(() => logPageView());
 logPageView();
 
-export function App () {
+export function App() {
   const dispatch = useDispatch();
 
   const nightMode = useSelector(({ nightMode }) => nightMode);
@@ -41,6 +42,7 @@ export function App () {
           <Route component={Login} exact path="/login" />
           <Route component={Register} exact path="/register" />
           <Route component={Account} exact path="/account" />
+          <Route component={AccountDelete} exact path="/account/delete" />
           <Route component={Profile} exact path="/u/:username" />
           <Route component={Tracker} exact path="/u/:username/:slug" />
           <Route component={NotFound} path="/" />

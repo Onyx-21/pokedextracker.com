@@ -186,6 +186,11 @@ nav {
   letter-spacing: 1px;
   text-decoration: none;
 
+  &.btn-red {
+    background-color: $error;
+    color: #fff;
+  }
+
   &.btn-blue {
     background-color: $brand-secondary-light;
     color: #fff;

@@ -1,12 +1,12 @@
-import { API }          from '../utils/api';
-import { Config }       from '../../config';
+import { API } from '../utils/api';
+import { Config } from '../../config';
 import { checkVersion } from './utils';
-import { setToken }     from './session';
+import { setToken } from './session';
 
 export const SET_USER = 'SET_USER';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
-export function createUser (payload) {
+export function createUser(payload) {
   const { password, password_confirm } = payload;
   payload = Object.assign({ referrer: document.referrer }, payload);
 
@@ -27,7 +27,7 @@ export function createUser (payload) {
   };
 }
 
-export function retrieveUser (username) {
+export function retrieveUser(username) {
   return (dispatch) => {
     dispatch(checkVersion());
 
@@ -35,7 +35,7 @@ export function retrieveUser (username) {
   };
 }
 
-export function updateUser ({ username, payload }) {
+export function updateUser({ username, payload }) {
   return (dispatch) => {
     return Promise.resolve()
       .then(() => {
@@ -55,10 +55,18 @@ export function updateUser ({ username, payload }) {
   };
 }
 
-export function setCurrentUser (username) {
+export function deleteUser({ username }) {
+  return (dispatch) => {
+    dispatch(checkVersion());
+
+    return API.delete(`${Config.API_HOST}/users/${username}`);
+  }
+}
+
+export function setCurrentUser(username) {
   return { type: SET_CURRENT_USER, username };
 }
 
-export function setUser (user) {
+export function setUser(user) {
   return { type: SET_USER, user };
 }
