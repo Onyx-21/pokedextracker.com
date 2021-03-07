@@ -1,12 +1,12 @@
-import classNames          from 'classnames';
+import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Fragment }        from 'react';
+import { Fragment } from 'react';
 import { faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
 
 import { BOX_SIZE } from '../components/box';
-import { padding }  from './formatting';
+import { padding } from './formatting';
 
-export function groupBoxes (captures) {
+export function groupBoxes(captures) {
   let lastBoxName = null;
   let lastBoxIndex = 0;
 
@@ -26,7 +26,7 @@ export function groupBoxes (captures) {
   }, [[]]);
 }
 
-export function htmlName (name) {
+export function htmlName(name) {
   const male = name.indexOf('♂') > -1;
   const female = name.indexOf('♀') > -1;
 
@@ -43,11 +43,23 @@ export function htmlName (name) {
   );
 }
 
-export function iconClass ({ national_id: nationalId, form }, dex) {
+export function iconClass({ national_id: nationalId, form }, dex) {
   const classes = {
     'color-shiny': dex.shiny,
     [`form-${form}`]: Boolean(form)
   };
 
   return classNames('pkicon', `pkicon-${padding(nationalId, 3)}`, classes);
+}
+
+export function localizeName(nameList, language) {
+  let localizedName = null;
+
+  nameList.map((selectedName) => {
+    if (selectedName.language === language) {
+      localizedName = selectedName.name;
+    }
+  });
+
+  return (localizedName === null) ? localizeName(nameList, 'en') : localizedName;
 }

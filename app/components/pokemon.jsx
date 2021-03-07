@@ -1,17 +1,17 @@
-import PropTypes                    from 'prop-types';
-import classNames                   from 'classnames';
-import { FontAwesomeIcon }          from '@fortawesome/react-fontawesome';
-import { faInfo }                   from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ReactGA }                        from '../utils/analytics';
+import { ReactGA } from '../utils/analytics';
 import { createCaptures, deleteCaptures } from '../actions/capture';
-import { htmlName, iconClass }            from '../utils/pokemon';
-import { padding }                        from '../utils/formatting';
-import { setCurrentPokemon }              from '../actions/pokemon';
-import { setShowInfo }                    from '../actions/tracker';
+import { htmlName, iconClass, localizeName } from '../utils/pokemon';
+import { padding } from '../utils/formatting';
+import { setCurrentPokemon } from '../actions/pokemon';
+import { setShowInfo } from '../actions/tracker';
 
-export function Pokemon ({ capture }) {
+export function Pokemon({ capture }) {
   const dispatch = useDispatch();
 
   const currentDex = useSelector(({ currentDex }) => currentDex);
@@ -37,15 +37,15 @@ export function Pokemon ({ capture }) {
 
     if (capture.captured) {
       await dispatch(deleteCaptures({ payload, slug: currentDex, username: user.username }));
-      ReactGA.event({ category: 'Pokemon', label: capture.pokemon.name, action: 'unmark' });
+      ReactGA.event({ category: 'Pokemon', label: localizeName(capture.pokemon.nameList, 'en'), action: 'unmark' });
     } else {
       await dispatch(createCaptures({ payload, slug: currentDex, username: user.username }));
-      ReactGA.event({ category: 'Pokemon', label: capture.pokemon.name, action: 'mark' });
+      ReactGA.event({ category: 'Pokemon', label: localizeName(capture.pokemon.nameList, 'en'), action: 'mark' });
     }
   };
 
   const handleSetInfoClick = () => {
-    ReactGA.event({ action: 'show info', category: 'Pokemon', label: capture.pokemon.name });
+    ReactGA.event({ action: 'show info', category: 'Pokemon', label: localizeName(capture.pokemon.nameList, 'en') });
 
     dispatch(setCurrentPokemon(capture.pokemon.id));
     dispatch(setShowInfo(true));
@@ -60,7 +60,7 @@ export function Pokemon ({ capture }) {
   return (
     <div className={classNames(classes)}>
       <div className="set-captured" onClick={handleSetCapturedClick}>
-        <h4>{htmlName(capture.pokemon.name)}</h4>
+        <h4>{localizeName(htmlName(capture.pokemon.nameList), user.language)}</h4>
         <div className="icon-wrapper">
           <i className={iconClass(capture.pokemon, dex)} />
         </div>
@@ -70,7 +70,7 @@ export function Pokemon ({ capture }) {
         <div className="icon-wrapper">
           <i className={iconClass(capture.pokemon, dex)} />
         </div>
-        <h4>{htmlName(capture.pokemon.name)}</h4>
+        <h4>{localizeName(htmlName(capture.pokemon.nameList), user.language)}</h4>
         <p>#{padding(capture.pokemon.national_id, 3)}</p>
       </div>
       <div className="set-info" onClick={handleSetInfoClick}>

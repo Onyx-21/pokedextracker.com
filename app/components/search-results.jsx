@@ -1,19 +1,21 @@
-import PropTypes                    from 'prop-types';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMemo }                  from 'react';
+import { useMemo } from 'react';
 
-import { Pokemon }  from './pokemon';
+import { Pokemon } from './pokemon';
 import { setQuery } from '../actions/search';
+import { localizeName } from '../utils/pokemon';
 
-export function SearchResults ({ captures }) {
+export function SearchResults({ captures }) {
   const dispatch = useDispatch();
 
   const query = useSelector(({ query }) => query.toLowerCase());
+  const user = useSelector(({ currentUser, users }) => users[currentUser]);
 
   const handleClearClick = () => dispatch(setQuery(''));
 
   const filteredCaptures = useMemo(() => {
-    return captures.filter((capture) => capture.pokemon.name.toLowerCase().indexOf(query) === 0);
+    return captures.filter((capture) => localizeName(capture.pokemon.nameList, user.language).toLowerCase().indexOf(query) === 0);
   }, [captures, query]);
 
   if (filteredCaptures.length === 0) {
